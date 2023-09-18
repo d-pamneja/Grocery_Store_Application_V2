@@ -61,6 +61,7 @@ def create_category():
         try:
             db.session.add(cat)
             db.session.commit()
+            flash("Category created successfully!", "Success_Category_Create")
 
             return redirect(url_for('landing_admin')) #This redirects us back to the landing page
         except IntegrityError:
@@ -104,6 +105,7 @@ def update_category(category_id):
     # Commit changes to the database using try except block
     try:
         db.session.commit()
+        flash("Category updated successfully!", "Success_Category_Update")
         return redirect(url_for('categories'))  # Redirect back to the products view
     except IntegrityError:
         db.session.rollback()
@@ -133,6 +135,7 @@ def delete_category(category_id):
     try:
         db.session.delete(category)
         db.session.commit()
+        flash("Category deleted successfully!", "Success_Category_Delete")
         return redirect(url_for('categories'))  
     except IntegrityError:
         db.session.rollback()
