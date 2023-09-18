@@ -169,7 +169,7 @@ def create_product():
         cat_id = request.form['category_id']
 
         if date.fromisoformat(prod_exp_date) <= date.today():
-            flash("Error, product expiry date must be ahead of today.",'expiry_date_error')
+            flash("Error, product expiry date must be ahead of today.",'Expiry_Date_Error')
         else:
             #Next, we use the variables which we have got from the user above and create a product via the class product
                 prod = Product(
@@ -180,8 +180,10 @@ def create_product():
                 try:
                     db.session.add(prod)
                     db.session.commit()
-
+                    
+                    flash("Product created successfully!", "Success_Product_Create")
                     return redirect(url_for('landing_admin')) #This redirects us back to the landing page
+                    
                 except IntegrityError:
                     db.session.rollback()
                     flash("Error: A category with that name might already exist.", "Danger_Integirty_Error")
@@ -221,7 +223,7 @@ def update_product(product_id):
     product_expiry_date = request.form['product_expiry_date']
 
     if date.fromisoformat(product_expiry_date) <= date.today():
-            flash("Error, product expiry must be ahead of today.",'expiry_date_error')
+            flash("Error, product expiry must be ahead of today.",'Expiry_Date_Error')
     else:
         product.product_name = request.form['product_name'] 
         product.product_des = request.form['product_des']
@@ -234,6 +236,7 @@ def update_product(product_id):
 
         try:
             db.session.commit()
+            flash("Product updated successfully!", "Success_Product_Update")
         except IntegrityError:
             db.session.rollback()
             flash("Error: A category with that name might already exist.", "Danger_Integirty_Error")
@@ -263,6 +266,7 @@ def delete_product(product_id):
     try:
         db.session.delete(product)
         db.session.commit()
+        flash("Product deleted successfully!", "Success_Product_Delete")
         return redirect(url_for('product_admin'))  
     except IntegrityError:
         db.session.rollback()
