@@ -4,7 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError, StatementError, InvalidRequestError
 
 from flask import Flask, render_template, request, redirect, url_for, flash, request, session, redirect
-from wtforms import Form, StringField, TextAreaField, FloatField, IntegerField, SelectField, DateField, validators
+from wtforms import StringField, PasswordField, SubmitField, validators
+from wtforms.validators import InputRequired, Email
+from flask_login import UserMixin, RoleMixin, login_user, LoginManager, login_required, logout_user, current_user
+from flask_bcrypt import Bcrypt
+from flask_wtf import FlaskForm, Form
 
 db = SQLAlchemy()  #Initialising DataBase Here
 app = Flask(__name__) #Initialising the Aplication in Flask
@@ -15,6 +19,7 @@ db.init_app(app) # Connecting the Database to the App
 
 
 ## DATABASE CREATION
+
 # Here, we will create classes for both of our primary tables i.e. Category and Product. This is for the creation of our databases. Now, we will use db.Model as a parameter of each class to inherit some useful methods such as Column, Integer, String etc. 
 class Category(db.Model): #This is the class for Category, which will store all the prodcuts. Each product will be from a category, and a category may have multiple products
     category_id = db.Column(db.Integer(),primary_key = True) #ID of a category,set as the primary key
@@ -39,8 +44,62 @@ class Product(db.Model): #This is the class for Product, each unique SKU will be
 
     def __repr__(self):
         return "< Product %r >" % self.product_name
+  
+# Next, we will create a different types of roles which can be present in our application and their login/registration forms
 
+
+class Role(db.Model, RoleMixin): # This is the role which a person needs to have from either an Admin, Store Manager or User
+    role_id = db.Column(db.Integer, primary_key=True) #Unique ID of a role
+    role_name = db.Column(db.String(80), unique=True) #Name of the role
+    role_des = db.Column(db.String(100)) #Short description of the role
+
+class Admin_Info(db.Model, UserMixin): #This is the class for admin, where their email ID and password will be stored in this 
+        # NOTE_IMP : Here, we will only have one admin which will be preloaded into the database, so that no one else can register/login as an admin
+        admin_id = db.Column(db.Integer, primary_key = True) #Unique ID of a Admin
+        admin_name = db.Column(db.String(80), nullable=False) # Username of the admin
+        admin_email = db.Column(db.String(25),nullable = False, unique = True )#Email ID of the Admin, which will be unique
+        admin_password = db.Column(db.String(100),nullable = False) #Password of the Admin
+        admin_role = db.Column(db.Integer, db.ForeignKey('role.role_id')) # The type of role of the admin  
+
+        def get_id(self):
+            return str(self.admin_id)
+        
+class Manager_Info(db.Model, UserMixin): #This is the class for manager, where their email ID and password will be stored in this 
+        manager_id = db.Column(db.Integer, primary_key = True) #Unique ID of a Manager
+        manager_name = db.Column(db.String(80), nullable=False) # Username of the manager
+        manager_email = db.Column(db.String(25),nullable = False, unique = True )#Email ID of the Manager, which will be unique
+        manager_password = db.Column(db.String(100),nullable = False) #Password of the Manager
+        manager_role = db.Column(db.Integer, db.ForeignKey('role.role_id')) # The type of role of the admin  
+
+        def get_id(self):
+            return str(self.manager_id)
     
+
+class Users_Info(db.Model, UserMixin): #This is the class for each user, a users email ID and password will be stored in this 
+        user_id = db.Column(db.Integer, primary_key = True) #Unique ID of a user
+        user_name = db.Column(db.String(80), nullable=False) # Username of the user
+        user_email = db.Column(db.String(25),nullable = False, unique = True )#Email ID of the user, which will be unique
+        user_password = db.Column(db.String(100),nullable = False) #Password of the user
+        user_role = db.Column(db.Integer, db.ForeignKey('role.role_id')) # The type of role of the admin  
+
+        def get_id(self):
+            return str(self.user_id)
+        
+
+class Login_Info(FlaskForm): #This is the class for a person who signs in (Admin/Store Manager/User)
+    log_user = StringField(validators=[InputRequired(),validators.length(min=6,max=25)],render_kw={'placeholder':'Username'}) # Username of the person 
+    log_email = StringField(validators=[InputRequired(),Email(),validators.Length(min=6, max=25)],render_kw={"placeholder":"Email"}) #Email ID of the person
+    log_password = PasswordField(validators=[InputRequired(), validators.Length(min=6, max=25)],render_kw={"placeholder":"Password"}) #Password of the person
+    log_sub = SubmitField("Login") #Confirming Login
+
+class Registration_Info(FlaskForm): #This is the class for each new person who signs up (Store Manager/User)
+    reg_user = StringField(validators=[InputRequired(),validators.length(min=6,max=25)],render_kw={'placeholder':'Username'}) # Username of the person 
+    reg_email = StringField(validators=[InputRequired(),Email(),validators.Length(min=6, max=25)],render_kw={"placeholder":"Email"}) #Email ID of the person
+    reg_password = PasswordField(validators=[InputRequired(), validators.Length(min=6, max=25)],render_kw={"placeholder":"Password"}) #Password of the person
+    reg_sub = SubmitField("Register") #Confirming Registration
+
+
+ 
 ## CRUD ROUTES FOR CATEGORY AND PRODUCT ##
 
 ## CATEGORY
@@ -342,6 +401,7 @@ def products_search():
     else:
         products = Product.query.all()
     return render_template('landing_user.html', all=products)
+
 
 
 if __name__ == "__main__":
