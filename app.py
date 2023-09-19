@@ -47,7 +47,6 @@ class Product(db.Model): #This is the class for Product, each unique SKU will be
   
 # Next, we will create a different types of roles which can be present in our application and their login/registration forms
 
-
 class Role(db.Model, RoleMixin): # This is the role which a person needs to have from either an Admin, Store Manager or User
     role_id = db.Column(db.Integer, primary_key=True) #Unique ID of a role
     role_name = db.Column(db.String(80), unique=True) #Name of the role
