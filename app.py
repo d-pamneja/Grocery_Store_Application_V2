@@ -16,6 +16,15 @@ app = Flask(__name__) #Initialising the Aplication in Flask
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Primary_DataBase_MADII.sqlite3"
 app.config['SECRET_KEY'] = 'Dhruv_MAD2_Project_IITM'
 db.init_app(app) # Connecting the Database to the App
+bcrypt = Bcrypt(app) # Connecting the BCRYPT functionality to be used in our app
+
+login_manager = LoginManager() #This will basically allow our app and flash login to work together i.e. it connects them
+login_manager.init_app(app)
+login_manager.login_view = 'Login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 ## DATABASE CREATION
@@ -45,48 +54,29 @@ class Product(db.Model): #This is the class for Product, each unique SKU will be
     def __repr__(self):
         return "< Product %r >" % self.product_name
   
-# Next, we will create a different types of roles which can be present in our application and their login/registration forms
+# Next, we will create a different types of roles which can be present in our application, their user table login/registration forms
 
 class Role(db.Model, RoleMixin): # This is the role which a person needs to have from either an Admin, Store Manager or User
     role_id = db.Column(db.Integer, primary_key=True) #Unique ID of a role
     role_name = db.Column(db.String(80), unique=True) #Name of the role
     role_des = db.Column(db.String(100)) #Short description of the role
-
-class Admin_Info(db.Model, UserMixin): #This is the class for admin, where their email ID and password will be stored in this 
-        # NOTE_IMP : Here, we will only have one admin which will be preloaded into the database, so that no one else can register/login as an admin
-        admin_id = db.Column(db.Integer, primary_key = True) #Unique ID of a Admin
-        admin_name = db.Column(db.String(80), nullable=False) # Username of the admin
-        admin_email = db.Column(db.String(25),nullable = False, unique = True )#Email ID of the Admin, which will be unique
-        admin_password = db.Column(db.String(100),nullable = False) #Password of the Admin
-        admin_role = db.Column(db.Integer, db.ForeignKey('role.role_id')) # The type of role of the admin  
-
-        def get_id(self):
-            return str(self.admin_id)
-        
-class Manager_Info(db.Model, UserMixin): #This is the class for manager, where their email ID and password will be stored in this 
-        manager_id = db.Column(db.Integer, primary_key = True) #Unique ID of a Manager
-        manager_name = db.Column(db.String(80), nullable=False) # Username of the manager
-        manager_email = db.Column(db.String(25),nullable = False, unique = True )#Email ID of the Manager, which will be unique
-        manager_password = db.Column(db.String(100),nullable = False) #Password of the Manager
-        manager_role = db.Column(db.Integer, db.ForeignKey('role.role_id')) # The type of role of the admin  
-
-        def get_id(self):
-            return str(self.manager_id)
     
 
-class Users_Info(db.Model, UserMixin): #This is the class for each user, a users email ID and password will be stored in this 
-        user_id = db.Column(db.Integer, primary_key = True) #Unique ID of a user
-        user_name = db.Column(db.String(80), nullable=False) # Username of the user
-        user_email = db.Column(db.String(25),nullable = False, unique = True )#Email ID of the user, which will be unique
-        user_password = db.Column(db.String(100),nullable = False) #Password of the user
-        user_role = db.Column(db.Integer, db.ForeignKey('role.role_id')) # The type of role of the admin  
-
-        def get_id(self):
+class User(db.Model, UserMixin): 
+    user_id = db.Column(db.Integer, primary_key=True)
+    user_name = db.Column(db.String(80), nullable=False)
+    user_email = db.Column(db.String(25), nullable=False, unique=True)
+    user_password = db.Column(db.String(100), nullable=False)
+    user_role_id = db.Column(db.Integer, db.ForeignKey('role.role_id'))
+    user_role = db.relationship('Role', back_populates="users")
+    
+    def get_id(self):
             return str(self.user_id)
-        
+    
+Role.role_users = db.relationship('User', order_by= User.user_id, back_populates="role")
+
 
 class Login_Info(FlaskForm): #This is the class for a person who signs in (Admin/Store Manager/User)
-    log_user = StringField(validators=[InputRequired(),validators.length(min=6,max=25)],render_kw={'placeholder':'Username'}) # Username of the person 
     log_email = StringField(validators=[InputRequired(),Email(),validators.Length(min=6, max=25)],render_kw={"placeholder":"Email"}) #Email ID of the person
     log_password = PasswordField(validators=[InputRequired(), validators.Length(min=6, max=25)],render_kw={"placeholder":"Password"}) #Password of the person
     log_sub = SubmitField("Login") #Confirming Login
@@ -97,6 +87,98 @@ class Registration_Info(FlaskForm): #This is the class for each new person who s
     reg_password = PasswordField(validators=[InputRequired(), validators.Length(min=6, max=25)],render_kw={"placeholder":"Password"}) #Password of the person
     reg_sub = SubmitField("Register") #Confirming Registration
 
+#Now, let us create the functions for setting up the roles and the Admin
+def setup_roles():
+    roles = ['Admin', 'Store Manager', 'User']
+    existing_roles = [r.role_name for r in Role.query.all()]
+
+    for role_name in roles:
+        if role_name not in existing_roles:
+            role = Role(role_name=role_name)
+            db.session.add(role)
+    db.session.commit()
+    print("Roles created/verified successfully!")
+
+
+def setup_admin():
+    hashed_password = bcrypt.generate_password_hash("DhruvPamneja_IITMAD2Project").decode('utf-8')
+    admin_role = Role.query.filter_by(role_name="Admin").first()
+    
+    if admin_role:
+        existing_admin = User.query.filter_by(user_role=admin_role).first()
+        if not existing_admin:
+            admin = User(user_name="Dhruv Pamneja", 
+                         user_email="dpamneja@gmail.com", 
+                         user_password=hashed_password, 
+                         user_role=admin_role)
+            db.session.add(admin)
+            db.session.commit()
+            print("Admin created successfully!")
+    else:
+        print("Admin role not found. Ensure roles are created.")
+        
+# NOTE_IMP : The below two lines calling the function are only to be done once, after which these lines should be commented out
+setup_roles()
+setup_admin()
+
+ 
+# LOGIN AND REGISTRATION ROUTES
+
+@app.route('/login_admin',methods=['GET', 'POST']) #This is the login framework for the admin
+def login_admin():
+    form = Login_Info(request.form)
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(user_email=form.log_email.data).first()
+        if user is None:
+            flash("Email not registered. Please check your email or register.", 'Admin_Email_Not_Found_Error')
+            return render_template('login_admin.html', form=form)
+        if bcrypt.check_password_hash(user.user_password,form.log_password.data):
+            if user.user_role.role_name != "Admin":
+                flash("Unauthorized access.", 'Unauthorized_Admin_Error')
+                return redirect(url_for('login_admin'))
+            login_user(user)
+            return redirect('/landing_admin')
+        else:
+            flash("Incorrect Password. Try Again.",'Incorrect_Admin_Password_Error')
+    return render_template('login_admin.html',form=form) #The HTML Template 'login_admin.html' contains the html file which will be displayed
+
+
+@app.route('/login_store_manager',methods=['GET', 'POST']) #This is the login framework for the store manager
+def login_store_manager():
+    form = Login_Info(request.form)
+    
+    if form.validate_on_submit():
+        user = User.query.filter_by(user_email=form.log_email.data).first()
+        if user is None:
+            flash("Email not registered. Please check your email or register.", 'Store_Manager_Email_Not_Found_Error')
+            return render_template('login_store_manager.html', form=form)
+        if bcrypt.check_password_hash(user.user_password,form.log_password.data):
+            if user.user_role.role_name != "Store Manager":
+                flash("Unauthorized access.",'Unauthorized_Store_Manager_Error')
+                return redirect(url_for('login_store_manager'))
+            login_user(user)
+            return redirect('/landing_store_manager')
+        else:
+            flash("Incorrect Password. Try Again.",'Incorrect_Store_Manager_Password_Error')
+    return render_template('login_store_manager.html',form=form) #The HTML Template 'login_manager.html' contains the html file which will be displayed
+
+
+@app.route('/login_user',methods=['GET', 'POST']) #This is the login framework for the user
+def login_use():
+    form = Login_Info(request.form)
+    if form.validate_on_submit():
+        user = User.query.filter_by(user_email=form.log_email.data).first()
+        if user is None:
+            flash("Email not registered. Please check your email or register.", 'User_Email_Not_Found_Error')
+            return render_template('login_user.html', form=form)
+        if user:
+            if bcrypt.check_password_hash(user.user_password,form.log_password.data):
+                login_user(user)
+                return redirect('/landing_user')
+            else:
+                flash("Incorrect Password. Try Again.",'Incorrect_User_Password_Error')
+    return render_template('login_user.html',form=form) #The HTML Template 'login_user.html' contains the html file which will be displayed
 
  
 ## CRUD ROUTES FOR CATEGORY AND PRODUCT ##
