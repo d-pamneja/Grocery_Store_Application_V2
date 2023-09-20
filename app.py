@@ -60,6 +60,7 @@ class Role(db.Model, RoleMixin): # This is the role which a person needs to have
     role_id = db.Column(db.Integer, primary_key=True) #Unique ID of a role
     role_name = db.Column(db.String(80), unique=True) #Name of the role
     role_des = db.Column(db.String(100)) #Short description of the role
+    users = db.relationship('User', backref='user_role', lazy=True, order_by='User.user_id')
     
 
 class User(db.Model, UserMixin): 
@@ -68,13 +69,10 @@ class User(db.Model, UserMixin):
     user_email = db.Column(db.String(25), nullable=False, unique=True)
     user_password = db.Column(db.String(100), nullable=False)
     user_role_id = db.Column(db.Integer, db.ForeignKey('role.role_id'))
-    user_role = db.relationship('Role', back_populates="users")
     
     def get_id(self):
             return str(self.user_id)
     
-Role.role_users = db.relationship('User', order_by= User.user_id, back_populates="role")
-
 
 class Login_Info(FlaskForm): #This is the class for a person who signs in (Admin/Store Manager/User)
     log_email = StringField(validators=[InputRequired(),Email(),validators.Length(min=6, max=25)],render_kw={"placeholder":"Email"}) #Email ID of the person
@@ -122,7 +120,7 @@ setup_roles()
 setup_admin()
 
  
-# LOGIN  ROUTES
+# LOGIN ROUTES
 
 @app.route('/login_admin',methods=['GET', 'POST']) #This is the login framework for the admin
 def login_admin():
@@ -135,10 +133,10 @@ def login_admin():
             return render_template('login_admin.html', form=form)
         if bcrypt.check_password_hash(user.user_password,form.log_password.data):
             if user.user_role.role_name != "Admin":
-                flash("Unauthorized access.", 'Unauthorized_Admin_Error')
+                flash("Unauthorized Admin Access.", 'Unauthorized_Admin_Error')
                 return redirect(url_for('login_admin'))
             login_user(user)
-            return redirect('/landing_admin')
+            return redirect(url_for('landing_admin'))
         else:
             flash("Incorrect Password. Try Again.",'Incorrect_Admin_Password_Error')
     return render_template('login_admin.html',form=form) #The HTML Template 'login_admin.html' contains the html file which will be displayed
@@ -155,10 +153,10 @@ def login_store_manager():
             return render_template('login_store_manager.html', form=form)
         if bcrypt.check_password_hash(user.user_password,form.log_password.data):
             if user.user_role.role_name != "Store Manager":
-                flash("Unauthorized access.",'Unauthorized_Store_Manager_Error')
+                flash("Unauthorized Store Manager Access.",'Unauthorized_Store_Manager_Error')
                 return redirect(url_for('login_store_manager'))
             login_user(user)
-            return redirect('/landing_store_manager')
+            return redirect(url_for('landing_store_manager'))
         else:
             flash("Incorrect Password. Try Again.",'Incorrect_Store_Manager_Password_Error')
     return render_template('login_store_manager.html',form=form) #The HTML Template 'login_manager.html' contains the html file which will be displayed
@@ -175,11 +173,80 @@ def login_use():
         if user:
             if bcrypt.check_password_hash(user.user_password,form.log_password.data):
                 login_user(user)
-                return redirect('/landing_user')
+                return redirect(url_for('landing_user'))
             else:
                 flash("Incorrect Password. Try Again.",'Incorrect_User_Password_Error')
     return render_template('login_user.html',form=form) #The HTML Template 'login_user.html' contains the html file which will be displayed
 
+# REGISTRATION ROUTES
+@app.route('/register_user', methods=['GET', 'POST']) #This is the framework to register for a new user
+def register_user(): #The HTML Template 'register.html' contains the html file which will be displayed
+    form = Registration_Info(request.form)
+
+    if form.validate_on_submit(): #If the registration form is valid, it will hash the password using bcrypt and store it in the database
+        existing_user_email = User.query.filter_by(user_email=form.reg_email.data).first()
+        if existing_user_email: #If the entered user email already exists, it will throw an error and redirect to user registration page
+            flash('This email ID exists in the system. Kindly choose another one.', 'Email_Exists_Error')
+            return redirect(url_for('register_user'))
+        
+        hashed_password = bcrypt.generate_password_hash(form.reg_password.data)
+        user_role = Role.query.filter_by(role_name="User").first()
+        new_user = User(user_name = form.reg_user.data, user_email = form.reg_email.data, user_password = hashed_password,user_role_id = user_role.role_id)
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for('login_user'))
+        except IntegrityError:
+            db.session.rollback()
+            flash("Error: The Email entered already exists in our database. Try to Log In.", "Danger_Integirty_Error")
+        except (StatementError):
+            db.session.rollback()
+            flash("Error: There was an issue with your request.", "Danger_Statement_Error")
+        except (InvalidRequestError):
+            db.session.rollback()
+            flash("Error: There was an issue with your request.", "Danger_Invalid_Request_Error")
+        except:
+            db.session.rollback()
+            flash("An unexpected error occurred.", "Danger_Other")
+        
+    return render_template('register_user.html', form=form)
+
+@app.route('/register_store_manager', methods=['GET', 'POST']) #This is the framework to register for a new Store Manager
+def register_store_manager(): #The HTML Template 'register.html' contains the html file which will be displayed
+    form = Registration_Info(request.form)
+
+    if form.validate_on_submit(): #If the registration form is valid, it will hash the password using bcrypt and store it in the database
+        existing_user_email = User.query.filter_by(user_email=form.reg_email.data).first()
+        if existing_user_email: #If the entered user email already exists, it will throw an error and redirect to user registration page
+            flash('This email ID exists in the system. Kindly choose another one.', 'Email_Exists_Error')
+            return redirect(url_for('register_store_manager'))
+        
+        hashed_password = bcrypt.generate_password_hash(form.reg_password.data)
+        user_role = Role.query.filter_by(role_name="Store Manager").first()
+        new_user = User(user_name = form.reg_user.data, user_email = form.reg_email.data, user_password = hashed_password,user_role_id = user_role.role_id)
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for('login_store_manager'))
+        except IntegrityError:
+            db.session.rollback()
+            flash("Error: The Email entered already exists in our database. Try to Log In.", "Danger_Integirty_Error")
+        except (StatementError):
+            db.session.rollback()
+            flash("Error: There was an issue with your request.", "Danger_Statement_Error")
+        except (InvalidRequestError):
+            db.session.rollback()
+            flash("Error: There was an issue with your request.", "Danger_Invalid_Request_Error")
+        except:
+            db.session.rollback()
+            flash("An unexpected error occurred.", "Danger_Other")
+        
+    return render_template('register_store_manager.html', form=form)
+
+@app.route('/logout',methods = ['GET', 'POST'])
+def logout(): #This will logout the user/admin and redirect them to the home page
+    logout_user()
+    return redirect('/')
  
 ## CRUD ROUTES FOR CATEGORY AND PRODUCT ##
 
@@ -326,7 +393,7 @@ def create_product():
                     
                 except IntegrityError:
                     db.session.rollback()
-                    flash("Error: A category with that name might already exist.", "Danger_Integirty_Error")
+                    flash("Error: A product with that name might already exist.", "Danger_Integirty_Error")
                 except (StatementError):
                     db.session.rollback()
                     flash("Error: There was an issue with your request.", "Danger_Statement_Error")
@@ -379,7 +446,7 @@ def update_product(product_id):
             flash("Product updated successfully!", "Success_Product_Update")
         except IntegrityError:
             db.session.rollback()
-            flash("Error: A category with that name might already exist.", "Danger_Integirty_Error")
+            flash("Error: A product with that name might already exist.", "Danger_Integirty_Error")
         except (StatementError):
             db.session.rollback()
             flash("Error: There was an issue with your request.", "Danger_Statement_Error")
@@ -410,7 +477,7 @@ def delete_product(product_id):
         return redirect(url_for('product_admin'))  
     except IntegrityError:
         db.session.rollback()
-        flash("Error: A category with that name might already exist.", "Danger_Integirty_Error")
+        flash("Error: A product with that name might already exist.", "Danger_Integirty_Error")
     except (StatementError):
         db.session.rollback()
         flash("Error: There was an issue with your request.", "Danger_Statement_Error")
