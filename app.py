@@ -186,7 +186,7 @@ def register_user(): #The HTML Template 'register.html' contains the html file w
     if form.validate_on_submit(): #If the registration form is valid, it will hash the password using bcrypt and store it in the database
         existing_user_email = User.query.filter_by(user_email=form.reg_email.data).first()
         if existing_user_email: #If the entered user email already exists, it will throw an error and redirect to user registration page
-            flash('This email ID exists in the system. Kindly choose another one.', 'Email_Exists_Error')
+            flash('This email ID exists in the system. Kindly choose another one.', 'User_Email_Exists_Error')
             return redirect(url_for('register_user'))
         
         hashed_password = bcrypt.generate_password_hash(form.reg_password.data)
@@ -198,16 +198,16 @@ def register_user(): #The HTML Template 'register.html' contains the html file w
             return redirect(url_for('login_user'))
         except IntegrityError:
             db.session.rollback()
-            flash("Error: The Email entered already exists in our database. Try to Log In.", "Danger_Integirty_Error")
+            flash("Error: The Email entered already exists in our database. Try to Log In.", "User_Danger_Integirty_Error")
         except (StatementError):
             db.session.rollback()
-            flash("Error: There was an issue with your request.", "Danger_Statement_Error")
+            flash("Error: There was an issue with your request.", "User_Danger_Statement_Error")
         except (InvalidRequestError):
             db.session.rollback()
-            flash("Error: There was an issue with your request.", "Danger_Invalid_Request_Error")
+            flash("Error: There was an issue with your request.", "User_Danger_Invalid_Request_Error")
         except:
             db.session.rollback()
-            flash("An unexpected error occurred.", "Danger_Other")
+            flash("An unexpected error occurred.", "User_Danger_Other")
         
     return render_template('register_user.html', form=form)
 

@@ -47,8 +47,11 @@
             border-radius: 5px;
         }
         
-        .alert-Admin_Email_Not_Found_Error,
-        .alert-Incorrect_Admin_Password_Error,
+        .alert-Email_Exists_Error,
+        .alert-User_Danger_Integirty_Error,
+        .alert-User_Danger_Statement_Error,
+        .alert-User_Danger_Invalid_Request_Error,
+        .alert-User_Danger_Other,
         .alert-Unauthorized_Admin_Error {
             background-color: #f44336;
             color: white;
@@ -76,13 +79,16 @@
 <body>
 
     <div class="container center-box bg-white rounded">
-        <header><strong>Admin Registration</strong></header>
+        <header><strong>User Registration</strong></header>
 
-        <form method="POST" action="">
-            {{ form.hidden_tag() }} {{ form.reg_email }} <br> {{ form.reg_password }} <br> {{ form.reg_sub }}
+        <form method="POST" action="/register_user">
+            {{ form.hidden_tag() }}
+            <label for="reg_email">Username:</label> {{ form.reg_user }}
+            <label for="reg_email">Email:</label> {{ form.reg_email }}
+            <label for="reg_email">Password:</label> {{ form.reg_password }} {{ form.reg_sub }}
 
         </form>
-        <a href='/login_admin'>Already have an Account? Login</a><br><br>
+        <a href='/login_user'>Already have an Account? Login</a><br><br>
     </div>
 </body>
 
