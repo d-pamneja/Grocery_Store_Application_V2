@@ -3,9 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Store Manager Login</title>
+    <title>Admin Register</title>
     <link href="/static/bootstrap.min.css" rel="stylesheet">
+
     <style>
         .center-box {
             position: absolute;
@@ -45,9 +47,9 @@
             border-radius: 5px;
         }
         
-        .alert-Store_Manager_Email_Not_Found_Error,
-        .alert-Incorrect_Store_Manager_Password_Error,
-        .alert-Unauthorized_Store_Manager_Error {
+        .alert-Admin_Email_Not_Found_Error,
+        .alert-Incorrect_Admin_Password_Error,
+        .alert-Unauthorized_Admin_Error {
             background-color: #f44336;
             color: white;
         }
@@ -72,26 +74,15 @@
 </head>
 
 <body>
-    <h1>Store Manager Login</h1>
 
     <div class="container center-box bg-white rounded">
-        <header><strong>Store Manager Login</strong></header>
-        {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
-        <div class="flash-messages">
-            {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">
-                {{ message }}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %} {% endwith %}
+        <header><strong>Admin Registration</strong></header>
 
-        <form method="POST" action="/login_store_manager">
-            {{ form.hidden_tag() }}
-            <label for="log_email">Email:</label> {{ form.log_email }}
-            <label for="log_password">Password:</label> {{ form.log_password }} {{ form.log_sub }}
+        <form method="POST" action="">
+            {{ form.hidden_tag() }} {{ form.reg_email }} <br> {{ form.reg_password }} <br> {{ form.reg_sub }}
 
         </form>
+        <a href='/login_admin'>Already have an Account? Login</a><br><br>
     </div>
 </body>
 

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Register</title>
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .center-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40%;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #d7cece;
+            background-image: url('static/full_image.jpeg'); 
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+
+        .bg-primary {
+            background-color: transparent !important;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="container center-box bg-white rounded">
+        <header><strong>Admin Registration</strong></header>
+
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            {{ form.reg_email }} <br>
+            {{ form.reg_password }} <br>
+            {{ form.reg_sub }}
+
+        </form>
+        <a href = '/login_admin'>Already have an Account? Login</a><br><br>
+        </div>
+</body>
+</html>
