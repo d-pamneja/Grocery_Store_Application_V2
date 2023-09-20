@@ -99,7 +99,7 @@ def setup_roles():
 
 
 def setup_admin():
-    hashed_password = bcrypt.generate_password_hash("DhruvPamneja_IITMAD2Project").decode('utf-8')
+    hashed_password = bcrypt.generate_password_hash("DhruvPamneja_IITM_MAD2Project").decode('utf-8')
     admin_role = Role.query.filter_by(role_name="Admin").first()
     
     if admin_role:
