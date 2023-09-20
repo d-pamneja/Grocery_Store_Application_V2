@@ -122,7 +122,7 @@ setup_roles()
 setup_admin()
 
  
-# LOGIN AND REGISTRATION ROUTES
+# LOGIN  ROUTES
 
 @app.route('/login_admin',methods=['GET', 'POST']) #This is the login framework for the admin
 def login_admin():
