@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>User Login</title>
     <link href="/static/bootstrap.min.css" rel="stylesheet">
     <style>
         .center-box {
@@ -75,7 +75,7 @@
     <h1>User Login</h1>
 
     <div class="container center-box bg-white rounded">
-        <header><strong>Admin Login</strong></header>
+        <header><strong>User Login</strong></header>
         {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
         <div class="flash-messages">
             {% for category, message in messages %}
