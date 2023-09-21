@@ -119,6 +119,10 @@ def setup_admin():
 setup_roles()
 setup_admin()
 
+# INITIAL LANDING PAGE ROUTE
+@app.route('/',methods = ['GET','POST'])
+def select():
+    return render_template("select.html")
  
 # LOGIN ROUTES
 
