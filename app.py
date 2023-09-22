@@ -234,16 +234,16 @@ def register_store_manager(): #The HTML Template 'register.html' contains the ht
             return redirect(url_for('login_store_manager'))
         except IntegrityError:
             db.session.rollback()
-            flash("Error: The Email entered already exists in our database. Try to Log In.", "Danger_Integirty_Error")
+            flash("Error: The Email entered already exists in our database. Try to Log In.", "Store_Manager_Danger_Integirty_Error")
         except (StatementError):
             db.session.rollback()
-            flash("Error: There was an issue with your request.", "Danger_Statement_Error")
+            flash("Error: There was an issue with your request.", "Store_Manager_Danger_Statement_Error")
         except (InvalidRequestError):
             db.session.rollback()
-            flash("Error: There was an issue with your request.", "Danger_Invalid_Request_Error")
+            flash("Error: There was an issue with your request.", "Store_Manager_Danger_Invalid_Request_Error")
         except:
             db.session.rollback()
-            flash("An unexpected error occurred.", "Danger_Other")
+            flash("An unexpected error occurred.", "Store_Manager_Danger_Other")
         
     return render_template('register_store_manager.html', form=form)
 
