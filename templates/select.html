@@ -34,9 +34,6 @@
         }
         
         .center-box {
-            background-color: whitesmoke;
-            border-radius: 15px;
-            padding: 40px 20px;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -44,9 +41,11 @@
             width: 100%;
             max-width: 600px;
             min-width: 300px;
-            padding: 20px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 40px 20px;
         }
         
         .center-box:hover {
@@ -56,6 +55,7 @@
         .center-box .btn {
             display: block;
             margin: 15px 0;
+            border-color: black;
             padding: 20px 15px;
             font-size: 1.5em;
             width: 100%;
@@ -113,7 +113,7 @@
         <p class="slogan">Fresh Finds, One Click Away.</p>
     </div>
     <div class="center-box">
-        <h2>Select Type</h2>
+        <h1>Select Type</h1>
         <a href="/login_user" class="btn btn-link">User</a>
         <a href="/login_store_manager" class="btn btn-link">Store Manager</a>
         <a href="/login_admin" class="btn btn-link">Admin</a>
