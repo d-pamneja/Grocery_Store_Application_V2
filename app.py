@@ -222,7 +222,7 @@ def register_store_manager(): #The HTML Template 'register.html' contains the ht
     if form.validate_on_submit(): #If the registration form is valid, it will hash the password using bcrypt and store it in the database
         existing_user_email = User.query.filter_by(user_email=form.reg_email.data).first()
         if existing_user_email: #If the entered user email already exists, it will throw an error and redirect to user registration page
-            flash('This email ID exists in the system. Kindly choose another one.', 'Email_Exists_Error')
+            flash('This email ID exists in the system. Kindly choose another one.', 'Store_Manager_Email_Exists_Error')
             return redirect(url_for('register_store_manager'))
         
         hashed_password = bcrypt.generate_password_hash(form.reg_password.data)
