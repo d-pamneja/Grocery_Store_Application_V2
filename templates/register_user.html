@@ -135,7 +135,7 @@
     </div>
 
     <div class="container center-box bg-white rounded">
-        <header><strong>User Registration</strong></header>
+        <h1>User Registration</h1>
         {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
         <div class="flash-messages">
             {% for category, message in messages %}
@@ -145,6 +145,9 @@
             {% endfor %}
         </div>
         {% endif %} {% endwith %}
+        <p>
+            <h4>Your Gateway to Freshness & Convenience.</h4>
+        </p>
 
 
         <form method="POST" action="/register_user">
