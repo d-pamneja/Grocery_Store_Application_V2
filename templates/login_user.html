@@ -131,7 +131,7 @@
 
 
     <div class="container center-box bg-white rounded">
-        <header><strong>User Login</strong></header>
+        <h1>User Login</h1>
         {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
         <div class="flash-messages">
             {% for category, message in messages %}
@@ -150,6 +150,7 @@
                 <button type="submit" class="btn custom-btn-submit">Submit</button>
             </div>
 
+            <br>
             <div class="mt-2 d-flex justify-content-center">
                 <span>Don't have an account? <a href="/register_user">Register Now</a></span>
             </div>
