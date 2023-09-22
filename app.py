@@ -119,6 +119,9 @@ def setup_admin():
 setup_roles()
 setup_admin()
 
+#Now, we will create and push the application context. This helps us to execute commands or functionalities that require this app to run
+app.app_context().push()  
+
 # INITIAL LANDING PAGE ROUTE
 @app.route('/',methods = ['GET','POST'])
 def select():
@@ -555,6 +558,9 @@ def products_search():
     return render_template('landing_user.html', all=products)
 
 
+#Now, we will create our database tables and store it
+db.create_all()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.debug=True
+    app.run()
