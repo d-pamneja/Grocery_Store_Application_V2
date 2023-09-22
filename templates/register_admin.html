@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Login</title>
+    <title>Admin Setup</title>
     <link href="/static/bootstrap.min.css" rel="stylesheet">
+
     <style>
         .header-banner {
             background-color: #6DBE45;
@@ -56,7 +57,7 @@
         body {
             font-family: 'Open Sans', sans-serif;
             background-color: #d7cece;
-            background-image: url('/static/welcome_image_user.jpg');
+            background-image: url('/static/welcome_image_user.jpeg');
             background-repeat: no-repeat;
             background-size: 100%;
         }
@@ -69,11 +70,14 @@
             padding: 10px;
             margin-top: 15px;
             border-radius: 5px;
+            font-weight: 500;
         }
         
-        .alert-User_Email_Not_Found_Error,
-        .alert-Incorrect_User_Password_Error,
-        .alert-Invalid_User_Error {
+        .alert-Admin_Email_Exists_Error,
+        .alert-Admin_Danger_Integirty_Error,
+        .alert-Admin_Danger_Statement_Error,
+        .alert-Admin_Danger_Invalid_Request_Error,
+        .alert-Admin_Danger_Other {
             background-color: #f44336;
             color: white;
         }
@@ -130,9 +134,8 @@
         <p class="slogan">Fresh Finds, One Click Away.</p>
     </div>
 
-
     <div class="container center-box bg-white rounded">
-        <h1>User Login</h1>
+        <h1>Admin Setup</h1>
         {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
         <div class="flash-messages">
             {% for category, message in messages %}
@@ -142,18 +145,24 @@
             {% endfor %}
         </div>
         {% endif %} {% endwith %}
+        <p>
+            <h4>Your Gateway to Freshness & Convenience.</h4>
+        </p>
 
-        <form method="POST" action="/login_user">
+
+        <form method="POST" action="/admin_setup">
             {{ form.hidden_tag() }}<br>
-            <label for="log_email"><strong>Email:</strong></label> {{ form.log_email }}<br>
-            <label for="log_password"><strong>Password:</strong></label> {{ form.log_password }}<br>
+
+            <label for="reg_user"><strong>Username:</strong></label> {{ form.reg_user }}<br>
+            <label for="reg_email"><strong>Email:</strong></label> {{ form.reg_email }}<br>
+            <label for="reg_password"><strong>Password:</strong></label> {{ form.reg_password }}<br>
             <div class="mt-2 d-flex justify-content-center">
                 <button type="submit" class="btn custom-btn-submit">Submit</button>
             </div>
-
             <br>
+
             <div class="mt-2 d-flex justify-content-center">
-                <span>Don't have an account? <a href="/register_user">Register Now</a></span>
+                <span>Already have an account? <a href="/login_admin">Log In</a></span>
             </div>
 
             <div class="mt-2 d-flex justify-content-center">
@@ -162,7 +171,6 @@
 
         </form>
     </div>
-
     <div class="footer-banner">
         <a class="footer-text" href="mailto:21f1001719@ds.study.iitm.ac.in">Email: 21f1001719@ds.study.iitm.ac.in</a>
     </div>

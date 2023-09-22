@@ -5,8 +5,8 @@ from sqlalchemy.exc import IntegrityError, StatementError, InvalidRequestError
 
 from flask import Flask, render_template, request, redirect, url_for, flash, request, session, redirect
 from wtforms import StringField, PasswordField, SubmitField, validators
-from wtforms.validators import InputRequired, Email
-from flask_login import UserMixin, RoleMixin, login_user, LoginManager, login_required, logout_user, current_user
+from wtforms.validators import InputRequired
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_bcrypt import Bcrypt
 from flask_wtf import FlaskForm, Form
 
@@ -56,7 +56,7 @@ class Product(db.Model): #This is the class for Product, each unique SKU will be
   
 # Next, we will create a different types of roles which can be present in our application, their user table login/registration forms
 
-class Role(db.Model, RoleMixin): # This is the role which a person needs to have from either an Admin, Store Manager or User
+class Role(db.Model): # This is the role which a person needs to have from either an Admin, Store Manager or User
     role_id = db.Column(db.Integer, primary_key=True) #Unique ID of a role
     role_name = db.Column(db.String(80), unique=True) #Name of the role
     role_des = db.Column(db.String(100)) #Short description of the role
@@ -75,15 +75,21 @@ class User(db.Model, UserMixin):
     
 
 class Login_Info(FlaskForm): #This is the class for a person who signs in (Admin/Store Manager/User)
-    log_email = StringField(validators=[InputRequired(),Email(),validators.Length(min=6, max=25)],render_kw={"placeholder":"Email"}) #Email ID of the person
+    log_email = StringField(validators=[InputRequired(),validators.Length(min=6, max=25)],render_kw={"placeholder":"Email"}) #Email ID of the person
     log_password = PasswordField(validators=[InputRequired(), validators.Length(min=6, max=25)],render_kw={"placeholder":"Password"}) #Password of the person
     log_sub = SubmitField("Login") #Confirming Login
 
 class Registration_Info(FlaskForm): #This is the class for each new person who signs up (Store Manager/User)
     reg_user = StringField(validators=[InputRequired(),validators.length(min=6,max=25)],render_kw={'placeholder':'Username'}) # Username of the person 
-    reg_email = StringField(validators=[InputRequired(),Email(),validators.Length(min=6, max=25)],render_kw={"placeholder":"Email"}) #Email ID of the person
+    reg_email = StringField(validators=[InputRequired(),validators.Length(min=6, max=25)],render_kw={"placeholder":"Email"}) #Email ID of the person
     reg_password = PasswordField(validators=[InputRequired(), validators.Length(min=6, max=25)],render_kw={"placeholder":"Password"}) #Password of the person
     reg_sub = SubmitField("Register") #Confirming Registration
+    
+#Now, we will create and push the application context. This helps us to execute commands or functionalities that require this app to run
+app.app_context().push()  
+
+#Now, we will create our database tables and store it
+db.create_all()
 
 #Now, let us create the functions for setting up the roles and the Admin
 def setup_roles():
@@ -97,30 +103,40 @@ def setup_roles():
     db.session.commit()
     print("Roles created/verified successfully!")
 
+@app.route('/admin_setup',methods = ['GET','POST'])
+def setup_admin():         
+    form = Registration_Info(request.form)
 
-def setup_admin():
-    hashed_password = bcrypt.generate_password_hash("DhruvPamneja_IITM_MAD2Project").decode('utf-8')
-    admin_role = Role.query.filter_by(role_name="Admin").first()
-    
-    if admin_role:
-        existing_admin = User.query.filter_by(user_role=admin_role).first()
-        if not existing_admin:
-            admin = User(user_name="Dhruv Pamneja", 
-                         user_email="dpamneja@gmail.com", 
-                         user_password=hashed_password, 
-                         user_role=admin_role)
-            db.session.add(admin)
+    if form.validate_on_submit(): #If the registration form is valid, it will hash the password using bcrypt and store it in the database
+        existing_user_email = User.query.filter_by(user_email=form.reg_email.data).first()
+        if existing_user_email: #If the entered user email already exists, it will throw an error and redirect to user registration page
+            flash('This email ID exists in the system. Kindly choose another one.', 'Admin_Email_Exists_Error')
+            return redirect(url_for('setup_admin'))
+        
+        hashed_password = bcrypt.generate_password_hash(form.reg_password.data)
+        user_role = Role.query.filter_by(role_name="Admin").first()
+        new_admin = User(user_name = form.reg_user.data, user_email = form.reg_email.data, user_password = hashed_password,user_role_id = user_role.role_id)
+        try:
+            db.session.add(new_admin)
             db.session.commit()
-            print("Admin created successfully!")
-    else:
-        print("Admin role not found. Ensure roles are created.")
+            return redirect(url_for('login_admin'))
+        except IntegrityError:
+            db.session.rollback()
+            flash("Error: The Email entered already exists in our database. Try to Log In.", "User_Danger_Integirty_Error")
+        except (StatementError):
+            db.session.rollback()
+            flash("Error: There was an issue with your request.", "Admin_Danger_Statement_Error")
+        except (InvalidRequestError):
+            db.session.rollback()
+            flash("Error: There was an issue with your request.", "Admin_Danger_Invalid_Request_Error")
+        except:
+            db.session.rollback()
+            flash("An unexpected error occurred.", "Admin_Danger_Other")
+        
+    return render_template('register_admin.html', form=form)
         
 # NOTE_IMP : The below two lines calling the function are only to be done once, after which these lines should be commented out
 setup_roles()
-setup_admin()
-
-#Now, we will create and push the application context. This helps us to execute commands or functionalities that require this app to run
-app.app_context().push()  
 
 # INITIAL LANDING PAGE ROUTE
 @app.route('/',methods = ['GET','POST'])
@@ -136,7 +152,7 @@ def login_admin():
     if form.validate_on_submit():
         user = User.query.filter_by(user_email=form.log_email.data).first()
         if user is None:
-            flash("Email not registered. Please check your email or register.", 'Admin_Email_Not_Found_Error')
+            flash("Email not registered. Please check your email.", 'Admin_Email_Not_Found_Error')
             return render_template('login_admin.html', form=form)
         if bcrypt.check_password_hash(user.user_password,form.log_password.data):
             if user.user_role.role_name != "Admin":
@@ -179,6 +195,9 @@ def login_use():
             return render_template('login_user.html', form=form)
         if user:
             if bcrypt.check_password_hash(user.user_password,form.log_password.data):
+                if user.user_role.role_name != "User":
+                    flash("Not a User Login.",'Invalid_User_Error')
+                    return redirect(url_for('login_use'))
                 login_user(user)
                 return redirect(url_for('landing_user'))
             else:
@@ -212,9 +231,6 @@ def register_user(): #The HTML Template 'register.html' contains the html file w
         except (InvalidRequestError):
             db.session.rollback()
             flash("Error: There was an issue with your request.", "User_Danger_Invalid_Request_Error")
-        except:
-            db.session.rollback()
-            flash("An unexpected error occurred.", "User_Danger_Other")
         
     return render_template('register_user.html', form=form)
 
@@ -237,13 +253,13 @@ def register_store_manager(): #The HTML Template 'register.html' contains the ht
             return redirect(url_for('login_store_manager'))
         except IntegrityError:
             db.session.rollback()
-            flash("Error: The Email entered already exists in our database. Try to Log In.", "Store_Manager_Danger_Integirty_Error")
+            flash("The Email entered already exists in our database. Try to Log In.", "Store_Manager_Danger_Integirty_Error")
         except (StatementError):
             db.session.rollback()
-            flash("Error: There was an issue with your request.", "Store_Manager_Danger_Statement_Error")
+            flash("There was an issue with your request.", "Store_Manager_Danger_Statement_Error")
         except (InvalidRequestError):
             db.session.rollback()
-            flash("Error: There was an issue with your request.", "Store_Manager_Danger_Invalid_Request_Error")
+            flash("Your request was invalid.", "Store_Manager_Danger_Invalid_Request_Error")
         except:
             db.session.rollback()
             flash("An unexpected error occurred.", "Store_Manager_Danger_Other")
@@ -254,6 +270,18 @@ def register_store_manager(): #The HTML Template 'register.html' contains the ht
 def logout(): #This will logout the user/admin and redirect them to the home page
     logout_user()
     return redirect('/')
+
+@app.route('/landing_user',methods = ['GET', 'POST'])
+def landing_user():
+    return render_template('landing_user.html')
+
+@app.route('/landing_store_manager',methods = ['GET', 'POST'])
+def landing_store_manager():
+    return render_template('landing_store_manager.html')
+
+@app.route('/landing_admin',methods = ['GET', 'POST'])
+def landing_admin():
+    return render_template('landing_admin.html')
  
 ## CRUD ROUTES FOR CATEGORY AND PRODUCT ##
 
@@ -557,9 +585,6 @@ def products_search():
         products = Product.query.all()
     return render_template('landing_user.html', all=products)
 
-
-#Now, we will create our database tables and store it
-db.create_all()
 
 if __name__ == "__main__":
     app.debug=True
