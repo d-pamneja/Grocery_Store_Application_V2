@@ -32,7 +32,7 @@ def load_user(user_id):
 # Here, we will create classes for both of our primary tables i.e. Category and Product. This is for the creation of our databases. Now, we will use db.Model as a parameter of each class to inherit some useful methods such as Column, Integer, String etc. 
 class Category(db.Model): #This is the class for Category, which will store all the prodcuts. Each product will be from a category, and a category may have multiple products
     category_id = db.Column(db.Integer(),primary_key = True) #ID of a category,set as the primary key
-    category_name = db.Column(db.String(50), nullable = False) #Name of the category
+    category_name = db.Column(db.String(50), nullable = False,unique = True) #Name of the category
     category_des = db.Column(db.String(150)) #This contains an optional short description of the category
     products = db.relationship("Product", backref = "category", cascade = "all, delete") #Products a category has in it. We use backref so that it does not create redundant column with a foreign key and operates in one column only i.e. it creates a pseudo column where it stores the relationship. We use cascade so that if a category is deleted, the system automatically deletes it's products
 
@@ -120,7 +120,7 @@ def setup_admin():
             db.session.add(new_admin)
             db.session.commit()
             return redirect(url_for('login_admin'))
-        except IntegrityError:
+        except (IntegrityError):
             db.session.rollback()
             flash("Error: The Email entered already exists in our database. Try to Log In.", "User_Danger_Integirty_Error")
         except (StatementError):
@@ -129,14 +129,11 @@ def setup_admin():
         except (InvalidRequestError):
             db.session.rollback()
             flash("Error: There was an issue with your request.", "Admin_Danger_Invalid_Request_Error")
-        except:
-            db.session.rollback()
-            flash("An unexpected error occurred.", "Admin_Danger_Other")
         
     return render_template('register_admin.html', form=form)
         
 # NOTE_IMP : The below two lines calling the function are only to be done once, after which these lines should be commented out
-setup_roles()
+# setup_roles()
 
 # INITIAL LANDING PAGE ROUTE
 @app.route('/',methods = ['GET','POST'])
@@ -222,7 +219,7 @@ def register_user(): #The HTML Template 'register.html' contains the html file w
             db.session.add(new_user)
             db.session.commit()
             return redirect(url_for('login_user'))
-        except IntegrityError:
+        except (IntegrityError):
             db.session.rollback()
             flash("Error: The Email entered already exists in our database. Try to Log In.", "User_Danger_Integirty_Error")
         except (StatementError):
@@ -251,7 +248,7 @@ def register_store_manager(): #The HTML Template 'register.html' contains the ht
             db.session.add(new_user)
             db.session.commit()
             return redirect(url_for('login_store_manager'))
-        except IntegrityError:
+        except (IntegrityError):
             db.session.rollback()
             flash("The Email entered already exists in our database. Try to Log In.", "Store_Manager_Danger_Integirty_Error")
         except (StatementError):
@@ -260,9 +257,6 @@ def register_store_manager(): #The HTML Template 'register.html' contains the ht
         except (InvalidRequestError):
             db.session.rollback()
             flash("Your request was invalid.", "Store_Manager_Danger_Invalid_Request_Error")
-        except:
-            db.session.rollback()
-            flash("An unexpected error occurred.", "Store_Manager_Danger_Other")
         
     return render_template('register_store_manager.html', form=form)
 
@@ -306,18 +300,15 @@ def create_category():
             flash("Category created successfully!", "Success_Category_Create")
 
             return redirect(url_for('landing_admin')) #This redirects us back to the landing page
-        except IntegrityError:
+        except (IntegrityError):
             db.session.rollback()
-            flash("Error: A category with that name might already exist.", "Danger_Integirty_Error")
+            flash("Error: A category with that name might already exist.", "Cat_Create_Danger_Integirty_Error")
         except (StatementError):
             db.session.rollback()
-            flash("Error: There was an issue with your request.", "Danger_Statement_Error")
+            flash("Error: There was a statement issue with your request.", "Cat_Create_Danger_Statement_Error")
         except (InvalidRequestError):
             db.session.rollback()
-            flash("Error: There was an issue with your request.", "Danger_Invalid_Request_Error")
-        except:
-            db.session.rollback()
-            flash("An unexpected error occurred.", "Danger_Other")
+            flash("Error: Your request was invaild.", "Cat_Create_Danger_Invalid_Request_Error")
             
     return render_template("create_category.html") #Notice how we have not created an else/elif column for GET method. If the request in not POST, it will automatically be get and we will display the template
 
