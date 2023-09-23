@@ -17,15 +17,15 @@ Certainly, creating a project of this scope requires careful planning and a stra
   
 ### **2. Backend Development (Days 3-18)**
 - **Days 3-5: User Management**
-  - Set up Flask models for Users, Admin, and Store Managers with Role-Based Access Control (RBAC).
-  - Implement JWT or Flask Security for authentication.
-  - Design the database schema for SQLite.
+  - [x] Set up Flask models for Users, Admin, and Store Managers with Role-Based Access Control (RBAC).
+  - [x] Implement JWT or Flask Security for authentication.
+  - [x] Design the database schema for SQLite.
 - **Days 6-8: Section/Category Management**
-  - Implement CRUD endpoints for sections/categories.
-  - Add multilanguage support using UTF-8 encoding.
+  - [x] Implement CRUD endpoints for sections/categories.
+  - [x] Add multilanguage support using UTF-8 encoding.
 - **Days 9-11: Product Management**
-  - Implement CRUD endpoints for products with multilanguage support.
-  - Ensure the ability to allocate a product to a section/category.
+  - [x] Implement CRUD endpoints for products with multilanguage support.
+  - [x] Ensure the ability to allocate a product to a section/category.
 - **Days 12-13: Shopping Cart & Product Purchase**
   - Design and implement a shopping cart model and related endpoints.
   - Implement purchase functionality.
