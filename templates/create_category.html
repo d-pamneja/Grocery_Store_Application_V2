@@ -64,6 +64,18 @@
             background-color: transparent !important;
         }
         
+        .success {
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+        
+        .success-Success_Category_Create {
+            background-color: green;
+            color: white;
+        }
+        
         .alert {
             padding: 10px;
             margin-top: 15px;
@@ -105,11 +117,15 @@
         <h1 class="text-center">Add a Category</h1>
         {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
         <div class="flash-messages">
-            {% for category, message in messages %}
+            {% for category, message in messages %} {% if 'Danger' in category %}
             <div class="alert alert-{{ category }}">
                 {{ message }}
             </div>
-            {% endfor %}
+            {% else %}
+            <div class="success success-{{ category }}">
+                {{ message }}
+            </div>
+            {% endif %} {% endfor %}
         </div>
         {% endif %} {% endwith %}
         <form method="post" action="/category/create">

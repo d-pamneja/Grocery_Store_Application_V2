@@ -103,37 +103,22 @@ def setup_roles():
     db.session.commit()
     print("Roles created/verified successfully!")
 
-@app.route('/admin_setup',methods = ['GET','POST'])
-def setup_admin():         
-    form = Registration_Info(request.form)
 
-    if form.validate_on_submit(): #If the registration form is valid, it will hash the password using bcrypt and store it in the database
-        existing_user_email = User.query.filter_by(user_email=form.reg_email.data).first()
-        if existing_user_email: #If the entered user email already exists, it will throw an error and redirect to user registration page
-            flash('This email ID exists in the system. Kindly choose another one.', 'Admin_Email_Exists_Error')
-            return redirect(url_for('setup_admin'))
-        
-        hashed_password = bcrypt.generate_password_hash(form.reg_password.data)
-        user_role = Role.query.filter_by(role_name="Admin").first()
-        new_admin = User(user_name = form.reg_user.data, user_email = form.reg_email.data, user_password = hashed_password,user_role_id = user_role.role_id)
-        try:
-            db.session.add(new_admin)
-            db.session.commit()
-            return redirect(url_for('login_admin'))
-        except (IntegrityError):
-            db.session.rollback()
-            flash("Error: The Email entered already exists in our database. Try to Log In.", "User_Danger_Integirty_Error")
-        except (StatementError):
-            db.session.rollback()
-            flash("Error: There was an issue with your request.", "Admin_Danger_Statement_Error")
-        except (InvalidRequestError):
-            db.session.rollback()
-            flash("Error: There was an issue with your request.", "Admin_Danger_Invalid_Request_Error")
-        
-    return render_template('register_admin.html', form=form)
+def setup_admin():           
+    hashed_password = bcrypt.generate_password_hash("admin1234")
+    user_role = Role.query.filter_by(role_name="Admin").first()
+    new_admin = User(user_name = "DhruvP25", user_email = "dpamneja@gmail.com", user_password = hashed_password,user_role_id = user_role.role_id)
+    try:
+        db.session.add(new_admin)
+        db.session.commit()
+        return "Admin Created Successfully!"
+    except:
+        print("ERROR!")
+    
         
 # NOTE_IMP : The below two lines calling the function are only to be done once, after which these lines should be commented out
-# setup_roles()
+setup_roles()
+setup_admin()
 
 # INITIAL LANDING PAGE ROUTE
 @app.route('/',methods = ['GET','POST'])
@@ -298,11 +283,9 @@ def create_category():
             db.session.add(cat)
             db.session.commit()
             flash("Category created successfully!", "Success_Category_Create")
-
-            return redirect(url_for('landing_admin')) #This redirects us back to the landing page
         except (IntegrityError):
             db.session.rollback()
-            flash("Error: A category with that name might already exist.", "Cat_Create_Danger_Integirty_Error")
+            flash("Error: A category with that name already exists.", "Cat_Create_Danger_Integirty_Error")
         except (StatementError):
             db.session.rollback()
             flash("Error: There was a statement issue with your request.", "Cat_Create_Danger_Statement_Error")
