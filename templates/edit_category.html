@@ -71,7 +71,7 @@
             font-weight: 500;
         }
         
-        .success-Success_Category_Create {
+        .success-Success_Category_Update {
             background-color: green;
             color: white;
         }
@@ -83,15 +83,31 @@
             font-weight: 500;
         }
         
-        .alert-Cat_Create_Danger_Integirty_Error,
-        .alert-Cat_Create_Danger_Statement_Error,
-        .alert-Cat_Create_Danger_Invalid_Request_Error,
-        .alert-Unauthorized_Create_Category_Access {
+        .alert-Cat_Update_Danger_Integirty_Error,
+        .alert-Cat_Update_Danger_Statement_Error,
+        .alert-Cat_Update_Danger_Invalid_Request_Error,
+        .alert-Danger_Unauthorized_Edit_Category_Access,
+        .alert-Danger_Unauthorized_Update_Category_Access {
             background-color: #f44336;
             color: white;
         }
         
         #landing-admin {
+            position: absolute;
+            top: 20px;
+            right: 120px;
+            background-color: #ffffff;
+            padding: 5px 10px;
+            border-radius: 7px;
+            text-decoration: none;
+            color: rgb(89, 207, 89);
+        }
+        
+        #landing-admin:hover {
+            background-color: #f5f0ed;
+        }
+        
+        #view-catgories {
             position: absolute;
             top: 20px;
             right: 10px;
@@ -102,7 +118,7 @@
             color: rgb(89, 207, 89);
         }
         
-        #landing-admin:hover {
+        #view-catgories:hover {
             background-color: #f5f0ed;
         }
     </style>
@@ -129,17 +145,17 @@
             {% endif %} {% endfor %}
         </div>
         {% endif %} {% endwith %}
-        <form method="post" action="/category/create">
+        <form method="post" action="/category/update/{{ category.category_id }}">
             <div class="form-group">
-                <label for="cat_name">Enter the Category Name:</label>
-                <input name="cat_name" type="text" class="form-control" id="cat_name" required />
+                <label for="category_name">Enter the Category Name:</label>
+                <input name="category_name" type="text" class="form-control" id="category_name" required />
             </div>
             <div class="form-group">
-                <label for="cat_des">Enter a short description of Category (optional):</label>
-                <input name="cat_des" type="text" class="form-control" id="cat_des" />
+                <label for="category_des">Enter a short description of Category (optional):</label>
+                <input name="category_des" type="text" class="form-control" id="category_des" />
             </div>
             <div class="text-center">
-                <input type="submit" value="Add Category" class="btn btn-primary" />
+                <input type="submit" value="Update Category" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -147,6 +163,7 @@
         <a class="footer-text" href="mailto:21f1001719@ds.study.iitm.ac.in">Email: 21f1001719@ds.study.iitm.ac.in</a>
     </div>
     <a href="/landing_admin" id="landing-admin">Home</a>
+    <a href="/categories" id="view-catgories">Categories</a>
 </body>
 
 </html>

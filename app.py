@@ -117,8 +117,8 @@ def setup_admin():
     
         
 # NOTE_IMP : The below two lines calling the function are only to be done once, after which these lines should be commented out
-setup_roles()
-setup_admin()
+# setup_roles()
+# setup_admin()
 
 # INITIAL LANDING PAGE ROUTE
 @app.route('/',methods = ['GET','POST'])
@@ -269,9 +269,13 @@ def landing_admin():
 # CREATE
 # Now, we create a function of creating a category which will be having two methods i.e. POST and GET. This basically is the code for adding a new category to our database directly directly from a webpage
 @app.route('/category/create', methods = ['POST','GET'])
+@login_required
 def create_category():
-    if request.method == "POST":
-        #Whatever the user enters on the webpage, will be stored in these variables
+    if(current_user.user_role_id != 1):
+        flash("You do not have the permissions to view this page.", "Unauthorized_Create_Category_Access")
+    
+    elif request.method == "POST":
+    #Whatever the user enters on the webpage, will be stored in these variables
         cat_name = request.form['cat_name'] 
         cat_des = request.form['cat_des']
         #Next, we use the variables which we have got from the user above and create a category via the class Category
@@ -298,20 +302,32 @@ def create_category():
 # READ
 # Moving ahead, we create a function to view all categories that are presently stored in our system
 @app.route('/categories')
+@login_required
 def view_categories():
+    if(current_user.user_role_id != 1):
+        flash("You do not have the permissions to view this page.", "Unauthorized_View_Category_Access")
     all = Category.query.all()
-    return render_template('view_categories.html', all = all)
+    return render_template('view_categories_admin.html', all = all)
 
 
 # UPDATE
 # Moving ahead, we will create an update route for categories
 @app.route('/category/edit/<int:category_id>', methods=['GET'])
+@login_required
 def edit_category_page(category_id):
+    if(current_user.user_role_id != 1):
+        flash("You do not have the permissions to view/modify this page.", "Danger_Unauthorized_Edit_Category_Access")
+        return redirect(url_for('landing_admin'))
+    
     category = Category.query.get_or_404(category_id)
     return render_template('edit_category.html', category = category)
 
 @app.route('/category/update/<int:category_id>', methods=['POST'])
+@login_required
 def update_category(category_id):
+    if(current_user.user_role_id != 1):
+        flash("You do not have the permissions to view/modify this page.", "Danger_Unauthorized_Update_Category_Access")
+        
     category = Category.query.get_or_404(category_id)
 
     # Fetch data from the form and update the product object
@@ -322,30 +338,37 @@ def update_category(category_id):
     try:
         db.session.commit()
         flash("Category updated successfully!", "Success_Category_Update")
-        return redirect(url_for('categories'))  # Redirect back to the products view
+        return redirect(url_for('/landing_admin'))
     except IntegrityError:
         db.session.rollback()
-        flash("Error: A category with that name might already exist.", "Danger_Integirty_Error")
+        flash("Error: A category with that name might already exist.", "Cat_Update_Danger_Integirty_Error")
     except (StatementError):
         db.session.rollback()
-        flash("Error: There was an issue with your request.", "Danger_Statement_Error")
+        flash("Error: There was an issue with your request.", "Cat_Update_Danger_Statement_Error")
     except (InvalidRequestError):
         db.session.rollback()
-        flash("Error: There was an issue with your request.", "Danger_Invalid_Request_Error")
+        flash("Error: There was an issue with your request.", "Cat_Update_Danger_Invalid_Request_Error")
     except:
         db.session.rollback()
-        flash("An unexpected error occurred.", "Danger_Other")
+        flash("An unexpected error occurred.", "Cat_Update_Danger_Other")
+    return redirect(url_for('view_categories')) 
 
 
 # DELETE
 # Moving ahead, we will create a delete route for category
 
 @app.route('/category/confirm-delete/<int:category_id>', methods=['GET'])
+@login_required
 def confirm_delete_category(category_id):
+    if(current_user.user_role_id != 1):
+        flash("You do not have the permissions to view this page.", "Danger_Unauthorized_Confirm_Delete_Category_Access")
     return render_template('confirm_category_delete.html', category_id=category_id)
 
 @app.route('/category/delete/<int:category_id>', methods=['POST'])
+@login_required
 def delete_category(category_id):
+    if(current_user.user_role_id != 1):
+        flash("You do not have the permissions to view this page.", "Danger_Unauthorized_Delete_Category_Access")
     category = Category.query.get_or_404(category_id)
     # Deleteing a category using the try except block
     try:
@@ -355,16 +378,17 @@ def delete_category(category_id):
         return redirect(url_for('categories'))  
     except IntegrityError:
         db.session.rollback()
-        flash("Error: A category with that name might already exist.", "Danger_Integirty_Error")
+        flash("Error: A category with that name might already exist.", "Cat_Delete_Danger_Integirty_Error")
     except (StatementError):
         db.session.rollback()
-        flash("Error: There was an issue with your request.", "Danger_Statement_Error")
+        flash("Error: There was an issue with your request.", "Cat_Delete_Danger_Statement_Error")
     except (InvalidRequestError):
         db.session.rollback()
-        flash("Error: There was an issue with your request.", "Danger_Invalid_Request_Error")
+        flash("Error: There was an issue with your request.", "Cat_Delete_Danger_Invalid_Request_Error")
     except:
         db.session.rollback()
-        flash("An unexpected error occurred.", "Danger_Other")
+        flash("An unexpected error occurred.", "Cat_Delete_Danger_Other")
+    return redirect(url_for('view_categories')) 
 
 
 
