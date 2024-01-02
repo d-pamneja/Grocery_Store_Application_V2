@@ -22,15 +22,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/d-pamneja/Grocery_Store_Application_V2">
-    <img src="Code/static/E-Bazaar_Logo.png" alt="Logo" width="300" height="200">
+    <img src="static/E-Bazaar_Logo.png" alt="Logo" width="300" height="200">
   </a>
 
 <h3 align="center">EBazaar - Grocery Store Application</h3>
 
   <p align="center">
     The project is a multi-user grocery shopping app built with Flask for the API and VueJS for the UI, following RBAC for user roles. It allows user signup/login, admin login, and store manager signup/login. Admins manage categories, approving store manager requests. Store managers handle product management and category requests. Users can search, add products to a cart, and buy from multiple categories. The system includes backend jobs for exports, reports, and alerts, with performance optimization using caching. Scheduled jobs include daily reminders and monthly activity reports. Optional features include responsive UI, styling, discount functionality and filters/name search option.
-    <br />
-    <a href="https://github.com/d-pamneja/Grocery_Store_Application_V2"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://drive.google.com/file/d/18lhc3ANm3NSZYivvyWCd86r9f3YrIaw1/view?usp=sharing">View Demo</a>
@@ -61,9 +59,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
@@ -162,7 +158,6 @@ Below given are some additional screenshots of multiple pages of the application
         - View cart and continue with completing the purchase
         - Viewing the order history
 
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
