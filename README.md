@@ -176,7 +176,9 @@ I'm thrilled to have you exploring my project! This endeavor is a collective eff
 How You Can Contribute:
 
 🛠️ Found a bug? Have an idea for improvement? Fork the repo and create a pull request.
+
 💡 Have a suggestion for making this project even better? Open an issue with the "enhancement" tag.
+
 ⭐ Like what you see? Show your support by giving our project a star!
 
 Remember, your contributions, whether big or small, are incredibly valuable to us. They help us learn, inspire, and create a better project together.
