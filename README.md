@@ -147,7 +147,7 @@ Below given are some additional screenshots of multiple pages of the application
         - Perform the CRUD operations on the categories
         - Manage pending category requests made by the store managers
         - Select the preference of the monthly user report
-          - [![Product Admin Monthly Report Screen Shot][product-admin-monthly-report-screenshot]](https://example.com)
+        [![Product Admin Monthly Report Screen Shot][product-admin-monthly-report-screenshot]](https://example.com)
 2) <strong>Store Manager</strong>
     [![Product Manager Dashboard Screen Shot][product-manager-dashboard-screenshot]](https://example.com)
     - Above given is the store manager dashboard, from where the managers can :
