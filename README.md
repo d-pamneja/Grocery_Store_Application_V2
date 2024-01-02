@@ -28,7 +28,7 @@
 <h3 align="center">EBazaar - Grocery Store Application</h3>
 
   <p align="center">
-    This project is a robust, multi-user web application designed to simulate a digital grocery store environment. It features a dual user-system: one store manager (admin) and multiple end-users. Users can seamlessly register, browse through various product categories, and purchase groceries. The admin, on the other hand, enjoys the privilege of managing products and categories, ensuring a dynamic and updated product list for users, along with a visual dashboard for the analysis of sales.
+    The project is a multi-user grocery shopping app built with Flask for the API and VueJS for the UI, following RBAC for user roles. It allows user signup/login, admin login, and store manager signup/login. Admins manage categories, approving store manager requests. Store managers handle product management and category requests. Users can search, add products to a cart, and buy from multiple categories. The system includes backend jobs for exports, reports, and alerts, with performance optimization using caching. Scheduled jobs include daily reminders and monthly activity reports. Optional features include responsive UI, styling, discount functionality and filters/name search option.
     <br />
     <a href="https://github.com/d-pamneja/Grocery_Store_Application_V2"><strong>Explore the docs »</strong></a>
     <br />
