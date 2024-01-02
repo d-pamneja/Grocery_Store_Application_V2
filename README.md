@@ -33,7 +33,7 @@
     <a href="https://github.com/d-pamneja/Grocery_Store_Application_V2"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/d-pamneja/Grocery_Store_Application_V2">View Demo</a>
+    <a href="https://drive.google.com/file/d/18lhc3ANm3NSZYivvyWCd86r9f3YrIaw1/view?usp=sharing">View Demo</a>
     ·
     <a href="https://github.com/d-pamneja/Grocery_Store_Application_V2/issues">Report Bug</a>
     ·
