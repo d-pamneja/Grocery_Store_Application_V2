@@ -141,12 +141,26 @@ Before we could use the web app, we need to setup the environment and servers fo
 
 Below given are some additional screenshots of multiple pages of the application which can be accessed based on the basis of the level of control i.e. Admin, Store Manager or User.
 
-1) <strong><ul>Admin</ul></strong>
+1) <strong>Admin</strong>
     [![Product Admin Dashboard Screen Shot][product-admin-dashboard-screenshot]](https://example.com)
     - Above given is the admin dashboard, from where the admin can :
         - Perform the CRUD operations on the categories
         - Manage pending category requests made by the store managers
         - Select the preference of the monthly user report
+          - [![Product Admin Monthly Report Screen Shot][product-admin-monthly-report-screenshot]](https://example.com)
+2) <strong>Store Manager</strong>
+    [![Product Manager Dashboard Screen Shot][product-manager-dashboard-screenshot]](https://example.com)
+    - Above given is the store manager dashboard, from where the managers can :
+        - Perform the CRUD operations on the products
+        - Creating and sending category requests to the admins
+        - Generate the products csv and receive the same on registered mail
+3) <strong>User</strong>
+    [![Product User Dashboard Screen Shot][product-user-dashboard-screenshot]](https://example.com)
+    - Above given is the user dashboard, from where the user can :
+        - Sort products based on filters and/or categories
+        - Buy products from one and/or multiple categories
+        - View cart and continue with completing the purchase
+        - Viewing the order history
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
@@ -208,6 +222,9 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [linkedin-url]: https://www.linkedin.com/in/dhruv-pamneja-3b8432187/
 [product-screenshot]: Images/Home_Page.png
 [product-admin-dashboard-screenshot]: Images/ADMIN_DASHBOARD.png
+[product-admin-monthly-report-screenshot]: Images/Monthly_Report.png
+[product-manager-dashboard-screenshot]: Images/MANAGER_DASHBOARD.png
+[product-user-dashboard-screenshot]: Images/USER_DASHBOARD.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
