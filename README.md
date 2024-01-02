@@ -65,7 +65,6 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -201,17 +200,6 @@ Thank you for being a part of this journey!
 Dhruv Pamneja - dpamneja@gmail.com / 21f1001719@ds.study.iitm.ac.in
 
 Project Link: [https://github.com/d-pamneja/Grocery_Store_Application_V2](https://github.com/d-pamneja/Grocery_Store_Application_V2)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
