@@ -76,7 +76,17 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+Welcome to our grocery shopping application! This project is a feature-rich, multi-user platform designed for buying groceries seamlessly. It utilizes Flask for the API, VueJS for the user interface, and integrates RBAC (Role-Based Access Control) to manage different user roles, including admins and store managers.
+
+## Key Features
+
+- **User Management:** Secure user signup and login with token-based authentication for enhanced security.
+- **Admin Control:** Exclusive admin access for managing categories, approving store manager requests, and overseeing the application.
+- **Store Manager Tools:** Empower store managers with the ability to add, edit, and remove products, as well as request category modifications.
+- **Efficient Shopping:** Intuitive shopping features, including a user-friendly cart system, product search, and the flexibility to buy from multiple categories.
+- **Scheduled Jobs:** Automated daily reminders and monthly activity reports for user engagement and insights.
+- **Backend Optimization:** Implementing caching for performance enhancement and backend jobs for exports, reports, and alerts.
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -84,14 +94,9 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
 * [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
