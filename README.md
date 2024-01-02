@@ -198,9 +198,9 @@ Thank you for being a part of this journey!
 <!-- CONTACT -->
 ## Contact
 
-Dhruv Pamneja - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Dhruv Pamneja - dpamneja@gmail.com / 21f1001719@ds.study.iitm.ac.in
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/d-pamneja/Grocery_Store_Application_V2](https://github.com/d-pamneja/Grocery_Store_Application_V2)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
