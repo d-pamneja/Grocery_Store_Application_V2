@@ -141,7 +141,7 @@ Before we could use the web app, we need to setup the environment and servers fo
 
 Below given are some additional screenshots of multiple pages of the application which can be accessed based on the basis of the level of control i.e. Admin, Store Manager or User.
 
-1) <strong><u>Admin</u></strong>
+1) <strong><ul>Admin</ul></strong>
     [![Product Admin Dashboard Screen Shot][product-admin-dashboard-screenshot]](https://example.com)
     - Above given is the admin dashboard, from where the admin can :
         - Perform the CRUD operations on the categories
