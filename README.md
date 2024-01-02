@@ -10,7 +10,7 @@
 -->
 
 [![Issues][issues-shield]][https://github.com/d-pamneja/Grocery_Store_Application_V2/issues]
-[![LinkedIn][linkedin-shield]][https://www.linkedin.com/in/dhruv-pamneja-3b8432187/]
+[![LinkedIn][https://www.linkedin.com/in/dhruv-pamneja-3b8432187/]
 
 
 
