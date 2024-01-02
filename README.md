@@ -13,7 +13,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+<!-- [![MIT License][license-shield]][license-url] -->
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
@@ -30,14 +30,14 @@
   <p align="center">
     This project is a robust, multi-user web application designed to simulate a digital grocery store environment. It features a dual user-system: one store manager (admin) and multiple end-users. Users can seamlessly register, browse through various product categories, and purchase groceries. The admin, on the other hand, enjoys the privilege of managing products and categories, ensuring a dynamic and updated product list for users, along with a visual dashboard for the analysis of sales.
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/d-pamneja/Grocery_Store_Application_V2"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://github.com/d-pamneja/Grocery_Store_Application_V2">View Demo</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    <a href="https://github.com/d-pamneja/Grocery_Store_Application_V2/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/d-pamneja/Grocery_Store_Application_V2/issues">Request Feature</a>
   </p>
 </div>
 
