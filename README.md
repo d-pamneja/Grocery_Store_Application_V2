@@ -119,7 +119,7 @@ Before we could use the web app, we need to setup the environment and servers fo
 1) <b>Setting up the Flask server :</b>   
    - In a new Linux terminal tab, start the Flask server by typing 
 
-             python3 main.py
+             python3 app.py
 
 2) <b> Setting up Redis server : </b>    
     - In a new Linux terminal tab, start the redis server by typing 
@@ -198,7 +198,7 @@ Thank you for being a part of this journey!
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Dhruv Pamneja - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
 
 Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
 
