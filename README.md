@@ -154,6 +154,7 @@ Below given are some additional screenshots of multiple pages of the application
         - Perform the CRUD operations on the products
         - Creating and sending category requests to the admins
         - Generate the products csv and receive the same on registered mail
+        [![Product CSV Report Screen Shot][product-csv-report-screenshot]](https://example.com)
 3) <strong>User</strong>
     [![Product User Dashboard Screen Shot][product-user-dashboard-screenshot]](https://example.com)
     - Above given is the user dashboard, from where the user can :
@@ -223,6 +224,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [product-screenshot]: Images/Home_Page.png
 [product-admin-dashboard-screenshot]: Images/ADMIN_DASHBOARD.png
 [product-admin-monthly-report-screenshot]: Images/Monthly_Report.png
+[product-csv-report-screenshot]: Images/CSV_Report.png
 [product-manager-dashboard-screenshot]: Images/MANAGER_DASHBOARD.png
 [product-user-dashboard-screenshot]: Images/USER_DASHBOARD.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
