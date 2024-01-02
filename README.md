@@ -110,26 +110,26 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+The complete WebApp runs only on Linux system. Please download the Mail Hog application (Fake SMTP server) for your system, not be linux version. One can run the full WebApp in WSL and run the MailHog server in Windows.
+
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+Before we could use the web app, we need to setup the environment and servers for it.
+1) <b>Setting up the Flask server :</b>   
+   - In a new Linux terminal tab, start the Flask server by typing 
+
+             python3 main.py
+
+2) <b> Setting up Redis server : </b>    
+    - In a new Linux terminal tab, start the redis server by typing 
+
+          redis-server
+    
+3) <b> Setting up Celery Worker and Celery Beat : </b>
+    - In a new Linux terminal tab, start the Celery Workers and Beat together by typing 
+    
+          Celery -A celery_task.celery worker -l info -B    
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
