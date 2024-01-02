@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .header-banner {
+            background-color: #6DBE45;
+            padding: 15px 0;
+            text-align: center;
+        }
+        
+        .slogan {
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+        
+        @page {
+            size: A4;
+            margin: 10mm;
+            counter-increment: page;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .graph-container,
+        .spending-table {
+            background-color: rgba(173, 216, 230, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .graph-container img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .spending-table table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        .spending-table th,
+        .spending-table td {
+            text-align: center;
+            border: 1px solid #000;
+        }
+        
+        .center-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }
+        
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .user-report {
+            margin: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        
+        .welcome {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-banner">
+        <h1>E-Bazaar</h1>
+        <p class="slogan">Fresh Finds, One Click Away.</p>
+    </div>
+
+    <div class="welcome">
+        <h2>Welcome to the Monthly User Activity Report</h2>
+        <p>Dear Admin, this report provides a summary of user activity for the past month.</p>
+        <p>Report Date: {{today_report}}</p>
+    </div>
+
+</body>
+
+</html>

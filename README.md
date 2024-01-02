@@ -1,76 +1,234 @@
-# Grocery_Store_Application_V2
-MAD II Project IITM Sept 2023
+<a name="readme-top"></a>
 
-This is basically an extension of the MAD I Project, which is stored [here](https://github.com/d-pamneja/Grocery_Store_Application_V1). So, here is how we can proceed:
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
+
+[![Issues][issues-shield]][https://github.com/d-pamneja/Grocery_Store_Application_V2/issues]
+[![LinkedIn][linkedin-shield]][https://www.linkedin.com/in/dhruv-pamneja-3b8432187/]
 
 
-Certainly, creating a project of this scope requires careful planning and a strategic approach to ensure timely and effective delivery. Here's a structured roadmap you can follow:
 
-### **1. Pre-Planning (Days 1-2)**
-- **Day 1:** Define project architecture and tech stack. Identify the major components and how they will communicate.
-- **Day 2:** Set up your development environment:
-  - Flask for the backend.
-  - VueJS for the frontend.
-  - SQLite for the database.
-  - Redis for caching.
-  - Redis & Celery for batch jobs.
-  
-### **2. Backend Development (Days 3-18)**
-- **Days 3-5: User Management**
-  - [x] Set up Flask models for Users, Admin, and Store Managers with Role-Based Access Control (RBAC).
-  - [x] Implement JWT or Flask Security for authentication.
-  - [x] Design the database schema for SQLite.
-- **Days 6-8: Section/Category Management**
-  - [x] Implement CRUD endpoints for sections/categories.
-  - [x] Add multilanguage support using UTF-8 encoding.
-- **Days 9-11: Product Management**
-  - [x] Implement CRUD endpoints for products with multilanguage support.
-  - [x] Ensure the ability to allocate a product to a section/category.
-- **Days 12-13: Shopping Cart & Product Purchase**
-  - Design and implement a shopping cart model and related endpoints.
-  - Implement purchase functionality.
-- **Days 14-15: Backend Jobs**
-  - Set up Celery for task scheduling.
-  - Implement the daily reminder job using desired alert methods (e.g., Google Chat, SMS, Email).
-  - Implement the monthly activity report.
-- **Day 16-18: Performance, Caching, and Async Jobs**
-  - Implement Redis for caching.
-  - Integrate Celery for async operations like CSV exports.
-  - Ensure API performance optimization.
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/github_username/repo_name">
+    <img src="Images/E-Bazaar_Logo.png" alt="Logo" width="80" height="80">
+  </a>
 
-### **3. Frontend Development (Days 19-28)**
-- **Days 19-21: Setup & User Interface**
-  - Set up VueJS with potential integration of Vue CLI.
-  - Create the main layout using Bootstrap ensuring it's responsive.
-- **Days 22-24: Admin & Store Manager UI**
-  - Design and implement interfaces for product and category management.
-  - Add features for CSV export.
-- **Days 25-26: Shopping Cart UI**
-  - Implement a shopping cart interface.
-  - Ensure responsiveness.
-- **Days 27-28: Reports and User Management UI**
-  - Design interfaces for monthly reports in HTML and PDF.
-  - Implement the user sign-up and login interfaces.
+<h3 align="center">EBazaar - Grocery Store Application</h3>
 
-### **4. Advanced Features & Testing (Days 29-36)**
-- **Days 29-30: Advanced Recommendations**
-  - Implement the product reviews system.
-  - Design an algorithm for predicting product popularity.
-  - Set up promo codes for new users.
-- **Days 31-33: Styling and Aesthetics**
-  - Fine-tune UI/UX elements.
-  - Ensure a uniform theme throughout the application.
-- **Days 34-36: Testing**
-  - Conduct unit tests on both backend and frontend.
-  - Test all functionalities against the requirements.
+  <p align="center">
+    This project is a robust, multi-user web application designed to simulate a digital grocery store environment. It features a dual user-system: one store manager (admin) and multiple end-users. Users can seamlessly register, browse through various product categories, and purchase groceries. The admin, on the other hand, enjoys the privilege of managing products and categories, ensuring a dynamic and updated product list for users, along with a visual dashboard for the analysis of sales.
+    <br />
+    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    ·
+    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+  </p>
+</div>
 
-### **5. Finalization and Documentation (Days 37-40)**
-- **Days 37-38: Documentation**
-  - Write comprehensive documentation covering setup, architecture, endpoints, and user manuals.
-- **Day 39:** Dry Run
-  - Simulate a complete workflow to ensure all components are functioning correctly.
-- **Day 40:** Backup and Final Touches
-  - Take backups.
-  - Address any final issues or bugs.
 
-**NOTE:** Depending on your pace and unforeseen challenges, the timeframe might slightly differ. Make sure to account for potential roadblocks and always have a backup plan. Allocate some buffer days for unexpected events. Make regular backups, and frequently commit your code to a version control system like Git.
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
+
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+[![Product Name Screen Shot][product-screenshot]](https://example.com)
+
+Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+### Built With
+
+* [![Next][Next.js]][Next-url]
+* [![React][React.js]][React-url]
+* [![Vue][Vue.js]][Vue-url]
+* [![Angular][Angular.io]][Angular-url]
+* [![Svelte][Svelte.dev]][Svelte-url]
+* [![Laravel][Laravel.com]][Laravel-url]
+* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+* [![JQuery][JQuery.com]][JQuery-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+This is an example of how you may give instructions on setting up your project locally.
+To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+
+This is an example of how to list things you need to use the software and how to install them.
+* npm
+  ```sh
+  npm install npm@latest -g
+  ```
+
+### Installation
+
+1. Get a free API Key at [https://example.com](https://example.com)
+2. Clone the repo
+   ```sh
+   git clone https://github.com/github_username/repo_name.git
+   ```
+3. Install NPM packages
+   ```sh
+   npm install
+   ```
+4. Enter your API in `config.js`
+   ```js
+   const API_KEY = 'ENTER YOUR API';
+   ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+
+_For more examples, please refer to the [Documentation](https://example.com)_
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- ROADMAP -->
+## Roadmap
+
+- [ ] Feature 1
+- [ ] Feature 2
+- [ ] Feature 3
+    - [ ] Nested Feature
+
+See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- CONTACT -->
+## Contact
+
+Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+
+Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
+
+* []()
+* []()
+* []()
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
+[contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
+[forks-url]: https://github.com/github_username/repo_name/network/members
+[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
+[stars-url]: https://github.com/github_username/repo_name/stargazers
+[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
+[issues-url]: https://github.com/github_username/repo_name/issues
+[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
+[license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/linkedin_username
+[product-screenshot]: images/screenshot.png
+[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+[Next-url]: https://nextjs.org/
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
+[Vue-url]: https://vuejs.org/
+[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
+[Angular-url]: https://angular.io/
+[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
+[Svelte-url]: https://svelte.dev/
+[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
+[Laravel-url]: https://laravel.com
+[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Bootstrap-url]: https://getbootstrap.com
+[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
+[JQuery-url]: https://jquery.com 
