@@ -18,7 +18,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/d-pamneja/Grocery_Store_Application_V2">
-    <img src="Code/static/E-Bazaar_Logo.png" alt="Logo" width="200" height="200">
+    <img src="Code/static/E-Bazaar_Logo.png" alt="Logo" width="300" height="100">
   </a>
 
 <h3 align="center">EBazaar - Grocery Store Application</h3>
