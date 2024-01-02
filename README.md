@@ -130,7 +130,7 @@ Before we could use the web app, we need to setup the environment and servers fo
     - In a new Linux terminal tab, start the Celery Workers and Beat together by typing 
     
           Celery -A celery_task.celery worker -l info -B    
-   ```
+   
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
