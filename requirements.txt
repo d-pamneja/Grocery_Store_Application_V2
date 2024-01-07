@@ -29,7 +29,7 @@ Flask-Login==0.6.3
 Flask-Mail==0.9.1
 Flask-Principal==0.4.0
 Flask-RESTful==0.3.10
-Flask-Security==3.0.0
+# Flask-Security==3.0.0
 Flask-Security-Too==5.0.0
 Flask-SQLAlchemy==3.1.1
 Flask-WTF==1.1.1
