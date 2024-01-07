@@ -96,7 +96,7 @@ const profile = {
     },
 
     async mounted() {
-        const res = await fetch(`http://127.0.0.1:5000/api/users/${this.userId}`, {
+        const res = await fetch(`/api/users/${this.userId}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authentication-Token': localStorage.getItem('auth-token')
