@@ -8,6 +8,7 @@ import json
 import os
 
 
+
 script_directory = os.path.dirname(os.path.realpath(__file__))
 parent_directory = os.path.dirname(script_directory)
 relative_path = 'data/admin_settings.json'

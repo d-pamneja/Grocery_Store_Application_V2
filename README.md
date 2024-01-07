@@ -1,14 +1,5 @@
 <a name="readme-top"></a>
 
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -31,7 +22,7 @@
     The project is a multi-user grocery shopping app built with Flask for the API and VueJS for the UI, following RBAC for user roles. It allows user signup/login, admin login, and store manager signup/login. Admins manage categories, approving store manager requests. Store managers handle product management and category requests. Users can search, add products to a cart, and buy from multiple categories. The system includes backend jobs for exports, reports, and alerts, with performance optimization using caching. Scheduled jobs include daily reminders and monthly activity reports. Optional features include responsive UI, styling, discount functionality and filters/name search option.
     <br />
     <br />
-    <a href="https://drive.google.com/file/d/18lhc3ANm3NSZYivvyWCd86r9f3YrIaw1/view?usp=sharing">View Demo</a>
+    <a href="https://e-bazaar-jyst.onrender.com">View Demo</a>
     ·
     <a href="https://github.com/d-pamneja/Grocery_Store_Application_V2/issues">Report Bug</a>
     ·

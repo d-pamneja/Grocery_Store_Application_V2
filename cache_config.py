@@ -1,6 +1,7 @@
 from flask_caching import Cache
 
 
+
 def initialize_cache(app=None):
     cache_config = {
         "CACHE_TYPE": "RedisCache",
